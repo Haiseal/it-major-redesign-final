@@ -19,3 +19,6 @@ export const deleteLearningPathApi = (id) => api.delete(`/department-admin/learn
 
 export const getWeightsByMajorApi = (majorId) => api.get(`/department-admin/weights/${majorId}`)
 export const updateWeightApi = (type, id, payload) => api.put(`/department-admin/weights/${type}/${id}`, payload)
+export const initMajorWeightsApi = (majorId) => api.post(`/department-admin/weights/init/${majorId}`)
+export const addFoundationSubjectApi = (payload) => api.post('/department-admin/weights/foundation', payload)
+export const removeFoundationSubjectApi = (id) => api.delete(`/department-admin/weights/foundation/${id}`)
