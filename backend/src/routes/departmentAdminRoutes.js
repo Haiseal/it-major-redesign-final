@@ -1,21 +1,11 @@
 import express from "express";
 import {
   getDepartmentDashboard,
-  getMajors,
-  createMajor,
-  updateMajor,
-  deleteMajor,
-  getSubjects,
-  createSubject,
-  updateSubject,
-  deleteSubject,
-  getAllLearningPaths,
-  getLearningPathsByMajor,
-  createLearningPath,
-  updateLearningPath,
-  deleteLearningPath,
-  getWeightsByMajor,
-  updateWeight,
+  getMajors, createMajor, updateMajor, deleteMajor,
+  getSubjects, createSubject, updateSubject, deleteSubject,
+  getAllLearningPaths, getLearningPathsByMajor, createLearningPath, updateLearningPath, deleteLearningPath,
+  getWeightsByMajor, updateWeight,
+  addFoundationSubject, removeFoundationSubject, initMajorWeights,
 } from "../controllers/departmentAdminController.js";
 import { verifyToken, requireRole } from "../middleware/auth.js";
 
@@ -38,6 +28,10 @@ router.post("/learning-paths", verifyToken, requireRole("department_admin"), cre
 router.put("/learning-paths/:id", verifyToken, requireRole("department_admin"), updateLearningPath);
 router.delete("/learning-paths/:id", verifyToken, requireRole("department_admin"), deleteLearningPath);
 
+// Weight routes — specific routes MUST come before generic :majorId param
+router.post("/weights/init/:majorId", verifyToken, requireRole("department_admin"), initMajorWeights);
+router.post("/weights/foundation", verifyToken, requireRole("department_admin"), addFoundationSubject);
+router.delete("/weights/foundation/:id", verifyToken, requireRole("department_admin"), removeFoundationSubject);
 router.get("/weights/:majorId", verifyToken, requireRole("department_admin", "advisor", "system_admin"), getWeightsByMajor);
 router.put("/weights/:type/:id", verifyToken, requireRole("department_admin"), updateWeight);
 
